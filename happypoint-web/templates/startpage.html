@@ -1,6 +1,13 @@
 {% extends 'layout.html' %}
 {% block head %}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.4/dist/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css"
+          integrity="sha256-UK1EiopXIL+KVhfbFa8xrmAWPeBjMVdvYMYkTAEv/HI=" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css"
+          integrity="sha256-4hqlsNP9KM6+2eA8VUT0kk4RsMRTeS7QGHIM+MZ5sLY=" crossorigin="anonymous"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.slim.min.js"
+            integrity="sha256-MlusDLJIP1GRgLrOflUQtshyP0TwT/RHXsI1wWGnQhs=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"
+            integrity="sha256-zUQGihTEkA4nkrgfbbAM1f3pxvnWiznBND+TuJoUv3M=" crossorigin="anonymous"></script>
 {% endblock %}
 {% block content %}
 
@@ -16,7 +23,7 @@
             <!-- Start Carousel -->
             <div id="carousel-demo" class="carousel">
 
-                <div class="carousel-container">
+                <div class="carousel-item">
                     <div class="is-flex is-column is-bg-blue">
                         <div class="has-text-centered has-text-white carousel-font-size easy-font">Heatmaps</div>
                         <div class="container is-carousel-slider-bg has-text-centered"
@@ -25,7 +32,7 @@
                     </div>
                 </div>
 
-                <div class="carousel-container">
+                <div class="carousel-item">
                     <div class="is-flex is-column is-bg-blue">
                         <div class="has-text-centered has-text-white carousel-font-size easy-font">Quick overviews</div>
                         <div class="container is-carousel-slider-bg has-text-centered"
@@ -33,9 +40,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="carousel-container">
+                <div class="carousel-item">
                     <div class="is-flex is-column is-bg-blue">
-                        <div class="has-text-centered has-text-white carousel-font-size easy-font">Save your favorites</div>
+                        <div class="has-text-centered has-text-white carousel-font-size easy-font">Favorites</div>
                         <div class="container is-carousel-slider-bg has-text-centered"
                              style="background-image: url('/static/images/intro_slider_3.png')">
                         </div>
@@ -46,21 +53,15 @@
         </div>
     </section>
 
-    <script src="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.4/dist/js/bulma-carousel.min.js"></script>
     <script>
-        bulmaCarousel.attach('#carousel-demo', {
-            slidesToScroll: 1,
-            slidesToShow: 1,
-            autoplay: true,
-            loop: true,
-            autoplaySpeed: 7000,
-            breakpoints: [{changePoint: 480, slidesToShow: 1, slidesToScroll: 1}, {
-                changePoint: 640,
-                slidesToShow: 1,
-                slidesToScroll: 1
-            }, {changePoint: 768, slidesToShow: 1, slidesToScroll: 1}]
-
+        $(document).ready(function () {
+            $('.carousel').slick({
+                autoplay: true,
+                autoplaySpeed: 7000
+            })
+            ;
         });
+
     </script>
 
     <section class="section is-flex is-vertical">
@@ -82,7 +83,5 @@
             </div>
 
         </div>
-
-
     </section>
 {% endblock %}
