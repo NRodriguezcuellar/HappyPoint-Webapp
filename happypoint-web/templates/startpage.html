@@ -11,20 +11,34 @@
             </h1>
         </div>
     </section>
-    <section class="section">
+    <section class="">
         <div class="">
             <!-- Start Carousel -->
             <div id="carousel-demo" class="carousel">
-                <div class="item-1">
-                    <div class="container is-carousel-slider-bg has-text-centered has-text-white"
-                         style="background-image: url('/static/images/heatmap.png')">
-                        <h1 class="easy-font has-text-weight-bold carousel-font-size">Heatmaps</h1>
+
+                <div class="carousel-container">
+                    <div class="is-flex is-column is-bg-blue">
+                        <div class="has-text-centered has-text-white carousel-font-size easy-font">Heatmaps</div>
+                        <div class="container is-carousel-slider-bg has-text-centered"
+                             style="background-image: url('/static/images/intro_slider_1.png')">
+                        </div>
                     </div>
                 </div>
-                <div class="item-2">
-                    <div class="container is-carousel-slider-bg has-text-centered has-text-white"
-                         style="background-image: url('/static/images/quick_overview.png')">
-                        <h1 class="easy-font has-text-weight-bold carousel-font-size">Quick overviews</h1>
+
+                <div class="carousel-container">
+                    <div class="is-flex is-column is-bg-blue">
+                        <div class="has-text-centered has-text-white carousel-font-size easy-font">Quick overviews</div>
+                        <div class="container is-carousel-slider-bg has-text-centered"
+                             style="background-image: url('/static/images/intro_slider_2.png')">
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-container">
+                    <div class="is-flex is-column is-bg-blue">
+                        <div class="has-text-centered has-text-white carousel-font-size easy-font">Select your favorites</div>
+                        <div class="container is-carousel-slider-bg has-text-centered"
+                             style="background-image: url('/static/images/intro_slider_3.png')">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -37,16 +51,14 @@
         bulmaCarousel.attach('#carousel-demo', {
             slidesToScroll: 1,
             slidesToShow: 1,
-            autoplay: true,
-            loop: true,
             autoplaySpeed: 7000,
             navigationSwipe: true,
             breakpoints: [{changePoint: 480, slidesToShow: 1, slidesToScroll: 1}, {
                 changePoint: 640,
                 slidesToShow: 1,
                 slidesToScroll: 1
-            }, {changePoint: 768, slidesToShow: 1, slidesToScroll: 1}],
-            navigationKeys: true
+            }, {changePoint: 768, slidesToShow: 1, slidesToScroll: 1}]
+
         });
     </script>
 
@@ -57,7 +69,8 @@
 
             <div class="container level">
                 <div class="level-item "><a href="#" class="">
-                    <button class="button is-info download-app-button">App Store <span class="p-l-sm"><i class=" fab fa-apple"></i></span>
+                    <button class="button is-info download-app-button">App Store <span class="p-l-sm"><i
+                            class=" fab fa-apple"></i></span>
                     </button>
                 </a></div>
                 <div class="level-item "><a href="#" class="">

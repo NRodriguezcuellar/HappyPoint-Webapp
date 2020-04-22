@@ -1,6 +1,5 @@
 FROM python:3.8
 
-
 COPY ./happypoint-web /app
 
 WORKDIR /app

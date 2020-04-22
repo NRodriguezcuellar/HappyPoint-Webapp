@@ -27,15 +27,18 @@
     -moz-background-size: cover;
     background-size: cover;
     -o-background-size: cover;
-    height: 100%;
-    min-height: 350px;
+    height: 650px;
     position: static;
-    max-width: 300px;
+    width: 350px;
     border-radius: 10px;
+    text-align: center;
 
 }
 .download-app-button {
     min-width: 130px;
+}
+.is-column {
+    flex-direction: column;
 }
 
 .slider-navigation-next {
@@ -62,6 +65,9 @@
 .carousel-font-size {
     font-size: 30px;
 
+}
+.carousel-container {
+    max-height: 700px;
 }
 
 
