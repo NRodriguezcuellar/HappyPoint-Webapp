@@ -1,0 +1,40 @@
+{% extends 'layout.html' %}
+{% block head %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.4/dist/css/bulma-carousel.min.css">
+{% endblock %}
+{% block content %}
+
+    <section class="section">
+        <div class="container level">
+            <h1 class="level-item value-prop">
+                Don't waste your valuable time.
+            </h1>
+        </div>
+    </section>
+    <section class="section">
+        <div class="container">
+            <!-- Start Carousel -->
+            <div id="carousel-demo" class="carousel">
+                <div class="item-1">
+                    <div class="container heatmap-bg has-text-centered has-text-white">
+                        <h1 class="">Heatmap</h1>
+                    </div>
+                </div>
+                <div class="item-2">
+                    <div class="container quick-overview-bg has-text-centered has-text-white">
+                        <h1 class="">Quick overview</h1>
+                    </div>
+                </div>
+            </div>
+            <!-- End Carousel -->
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.4/dist/js/bulma-carousel.min.js"></script>
+    <script>
+        bulmaCarousel.attach('#carousel-demo', {
+            slidesToScroll: 1,
+            slidesToShow: 1
+        });
+    </script>
+{% endblock %}
