@@ -6,23 +6,25 @@
 
     <section class="section">
         <div class="container level">
-            <h1 class="level-item value-prop">
+            <h1 class="level-item value-prop easy-font has-text-weight-semibold has-text-centered">
                 Don't waste your valuable time.
             </h1>
         </div>
     </section>
     <section class="section">
-        <div class="container">
+        <div class="">
             <!-- Start Carousel -->
             <div id="carousel-demo" class="carousel">
                 <div class="item-1">
-                    <div class="container heatmap-bg has-text-centered has-text-white">
-                        <h1 class="">Heatmap</h1>
+                    <div class="container is-carousel-slider-bg has-text-centered has-text-white"
+                         style="background-image: url('/static/images/heatmap.png')">
+                        <h1 class="easy-font has-text-weight-bold carousel-font-size">Heatmaps</h1>
                     </div>
                 </div>
                 <div class="item-2">
-                    <div class="container quick-overview-bg has-text-centered has-text-white">
-                        <h1 class="">Quick overview</h1>
+                    <div class="container is-carousel-slider-bg has-text-centered has-text-white"
+                         style="background-image: url('/static/images/quick_overview.png')">
+                        <h1 class="easy-font has-text-weight-bold carousel-font-size">Quick overviews</h1>
                     </div>
                 </div>
             </div>
@@ -34,7 +36,37 @@
     <script>
         bulmaCarousel.attach('#carousel-demo', {
             slidesToScroll: 1,
-            slidesToShow: 1
+            slidesToShow: 1,
+            autoplay: true,
+            loop: true,
+            autoplaySpeed: 7000,
+            navigationSwipe: true,
+            breakpoints: [{changePoint: 480, slidesToShow: 1, slidesToScroll: 1}, {
+                changePoint: 640,
+                slidesToShow: 1,
+                slidesToScroll: 1
+            }, {changePoint: 768, slidesToShow: 1, slidesToScroll: 1}],
+            navigationKeys: true
         });
     </script>
+
+    <section class="section is-flex is-vertical">
+        <div class="container easy-font is-title ">
+            <h1 class="p-b-xl has-text-centered">Available on iOS and Android</h1>
+
+
+            <div class="container level">
+                <div class="level-item"><a href="#">
+                    <button class="button is-info">App Store</button>
+                </a></div>
+                <div class="level-item"><a href="#">
+                    <button class="button is-success">Play Store</button>
+                </a></div>
+
+            </div>
+
+        </div>
+
+
+    </section>
 {% endblock %}

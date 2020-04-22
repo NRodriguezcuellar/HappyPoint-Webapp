@@ -21,20 +21,8 @@
     font-family: 'Ubuntu', 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif;
 }
 
-.heatmap-bg {
-    background: url("/static/images/heatmap.png") no-repeat scroll center center;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    background-size: cover;
-    -o-background-size: cover;
-    height: 100%;
-    min-height: 350px;
-    position: static;
-    max-width: 300px;
-    border-radius: 10px;
-}
-.quick-overview-bg {
-    background: url("/static/images/quick_overview.png") no-repeat scroll center center;
+.is-carousel-slider-bg {
+    background: no-repeat scroll center center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -46,14 +34,32 @@
     border-radius: 10px;
 
 }
+
 .slider-navigation-next {
-    background-color: #4A90E2 !important;
+    border-color: lightgray !important;
 }
 
 .slider-navigation-previous {
-    background-color: #4A90E2 !important;
+    border-color: lightgray !important;
 }
 
+.slider-navigation-previous, .slider-navigation-next {
+    width: 35px !important;
+    height: 35px !important;
+}
+
+.is-title {
+    font-size: 35px;
+}
+
+.easy-font {
+    font-family: 'Quicksand', sans-serif;
+}
+
+.carousel-font-size {
+    font-size: 30px;
+
+}
 
 
 .m-none {
