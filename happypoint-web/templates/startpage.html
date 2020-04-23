@@ -7,7 +7,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.slim.min.js"
             integrity="sha256-MlusDLJIP1GRgLrOflUQtshyP0TwT/RHXsI1wWGnQhs=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"
-            integrity="sha256-zUQGihTEkA4nkrgfbbAM1f3pxvnWiznBND+TuJoUv3M=" crossorigin="anonymous"></script>
+            integrity="sha256-zUQGihTEkA4nkrgfbbAM1f3pxvnWiznBND+TuJoUv3M=" crossorigin="anonymous" defer></script>
 {% endblock %}
 {% block content %}
 
@@ -57,31 +57,37 @@
         $(document).ready(function () {
             $('.carousel').slick({
                 autoplay: true,
-                autoplaySpeed: 7000
+                autoplaySpeed: 5000
             })
             ;
         });
-
     </script>
 
     <section class="section is-flex is-vertical">
         <div class="container easy-font is-title ">
-            <h1 class="p-b-xl has-text-centered">Available on iOS and Android</h1>
+            <h1 class="p-b-xl has-text-centered">Soon available on iOS and Android</h1>
 
 
             <div class="container level">
-                <div class="level-item "><a href="#" class="">
-                    <button class="button is-info download-app-button">App Store <span class="p-l-sm"><i
+                <div class="level-item ">
+                    <button class="button is-info download-app-button" onclick="Soon()">App Store <span class="p-l-sm"><i
                             class=" fab fa-apple"></i></span>
                     </button>
-                </a></div>
-                <div class="level-item "><a href="#" class="">
-                    <button class="button is-success download-app-button">Play Store <span class="p-l-sm"><i
+                </div>
+                <div class="level-item ">
+                    <button class="button is-success download-app-button" onclick="Soon()">Play Store <span class="p-l-sm" disabled><i
                             class="fab fa-android"></i></span></button>
-                </a></div>
+                </div>
 
             </div>
 
         </div>
     </section>
+
+    <script>
+        function Soon() {
+            alert('Soon!')
+        }
+
+    </script>
 {% endblock %}
