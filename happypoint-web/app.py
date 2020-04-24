@@ -5,7 +5,6 @@ import uvicorn
 
 app = FastAPI()
 
-
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
@@ -13,6 +12,11 @@ templates = Jinja2Templates(directory="templates")
 @app.get('/')
 def startpage(request: Request):
     return templates.TemplateResponse('startpage.html', {'request': request})
+
+
+@app.get('/about-us')
+def about_us(request: Request):
+    return templates.TemplateResponse('about-us.html', {'request': request})
 
 
 if __name__ == "__main__":

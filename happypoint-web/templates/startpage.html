@@ -18,13 +18,14 @@
             </h1>
         </div>
     </section>
+
     <section class="">
         <div class="">
             <!-- Start Carousel -->
             <div id="carousel-demo" class="carousel">
 
                 <div class="carousel-item">
-                    <div class="is-flex is-column is-bg-blue">
+                    <div class="is-flex is-column has-bg-blue">
                         <div class="has-text-centered has-text-white carousel-font-size easy-font">Heatmaps</div>
                         <div class="container is-carousel-slider-bg has-text-centered"
                              style="background-image: url('/static/images/intro_slider_1.png')">
@@ -33,7 +34,7 @@
                 </div>
 
                 <div class="carousel-item">
-                    <div class="is-flex is-column is-bg-blue">
+                    <div class="is-flex is-column has-bg-blue">
                         <div class="has-text-centered has-text-white carousel-font-size easy-font">Quick overviews</div>
                         <div class="container is-carousel-slider-bg has-text-centered"
                              style="background-image: url('/static/images/intro_slider_2.png')">
@@ -41,7 +42,7 @@
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <div class="is-flex is-column is-bg-blue">
+                    <div class="is-flex is-column has-bg-blue">
                         <div class="has-text-centered has-text-white carousel-font-size easy-font">Favorites</div>
                         <div class="container is-carousel-slider-bg has-text-centered"
                              style="background-image: url('/static/images/intro_slider_3.png')">
@@ -57,7 +58,9 @@
         $(document).ready(function () {
             $('.carousel').slick({
                 autoplay: true,
-                autoplaySpeed: 5000
+                autoplaySpeed: 5000,
+                dots: true
+
             })
             ;
         });
@@ -67,18 +70,18 @@
         <div class="container easy-font is-title ">
             <h1 class="p-b-xl has-text-centered">Soon available on iOS and Android</h1>
 
-
             <div class="container level">
                 <div class="level-item ">
-                    <button class="button is-info download-app-button" onclick="Soon()">App Store <span class="p-l-sm"><i
+                    <button class="button is-info download-app-button" onclick="Soon()">App Store <span
+                            class="p-l-sm"><i
                             class=" fab fa-apple"></i></span>
                     </button>
                 </div>
                 <div class="level-item ">
-                    <button class="button is-success download-app-button" onclick="Soon()">Play Store <span class="p-l-sm" disabled><i
+                    <button class="button is-success download-app-button" onclick="Soon()">Play Store <span
+                            class="p-l-sm" disabled><i
                             class="fab fa-android"></i></span></button>
                 </div>
-
             </div>
 
         </div>
@@ -88,6 +91,5 @@
         function Soon() {
             alert('Soon!')
         }
-
     </script>
 {% endblock %}
