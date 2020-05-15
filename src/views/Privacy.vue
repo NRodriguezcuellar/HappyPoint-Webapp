@@ -1,20 +1,22 @@
 <template>
-    <div class=" columns">
-        <div class=" section column">
-            <div class="columns">
-                <div class="column" v-for="(section, titles) in privacySections" :key="titles">
-                    <H1 class="is-title p-md has-text-centered"> {{titles}}</H1>
-                    <div class="has-text-centered"> {{section}}</div>
-                </div>
+
+    <div class=" section columns">
+
+
+        <div class="section column is-half privacy-text-container">
+            <div class="container" v-for="(section, titles) in privacySections" :key="titles">
+                <H1 class="is-title p-md has-text-centered"> {{titles}}</H1>
+                <div class="has-text-centered"> {{section}}</div>
             </div>
         </div>
-        <div class="column image-wrapper">
-            <div>
 
+
+        <div class="section image-container column is-one-fifth">
+            <div class="image-wrapper">
+                <img src="~@/assets/privacy.svg" alt="privacy icon"/>
             </div>
-
-
         </div>
+
     </div>
 
 </template>
@@ -35,12 +37,21 @@
 </script>
 
 <style scoped>
-    .columns {
+
+    .privacy-text-container {
         flex-direction: column;
     }
+
     .image-wrapper {
-        min-height: 800px;
-        min-width: 40vw;
+        min-height: 300px;
+        min-width: 300px;
+
     }
+
+    .image-container {
+        display: flex;
+        justify-content: center;
+    }
+
 
 </style>

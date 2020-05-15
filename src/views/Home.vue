@@ -7,8 +7,6 @@
 </template>
 
 <script>
-    // @ is an alias to /src
-
 
     import ValueProp from "../components/valueProp";
     import FullWidthBanner from "../components/fullWidthBanner";
