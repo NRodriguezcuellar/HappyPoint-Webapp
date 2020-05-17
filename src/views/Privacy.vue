@@ -2,7 +2,6 @@
 
     <div class=" section columns">
 
-
         <div class="section column is-half privacy-text-container">
             <div class="container" v-for="(section, titles) in privacySections" :key="titles">
                 <H1 class="is-title p-md has-text-centered"> {{titles}}</H1>
@@ -10,10 +9,11 @@
             </div>
         </div>
 
-
         <div class="section image-container column is-one-fifth">
             <div class="image-wrapper">
-                <img src="~@/assets/privacy.svg" alt="privacy icon"/>
+                <div class="large-icon"><img src="~@/assets/securityLarge.png" alt="privacy icon"/></div>
+                <div class="medium-icon"><img src="~@/assets/securityMedium.png" alt="privacy icon"/></div>
+                <div class="small-icon"><img src="~@/assets/securitySmall.png" alt="privacy icon"/></div>
             </div>
         </div>
 
@@ -38,20 +38,29 @@
 
 <style scoped>
 
-    .privacy-text-container {
-        flex-direction: column;
-    }
-
     .image-wrapper {
         min-height: 300px;
         min-width: 300px;
-
     }
 
-    .image-container {
+    .large-icon {
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
+        padding: 5px;
     }
+
+    .medium-icon {
+        justify-content: flex-end;
+        display: flex;
+    }
+    .small-icon {
+        display: flex;
+        justify-content: start;
+        padding-left: 50px;
+
+    }
+
+
 
 
 </style>
