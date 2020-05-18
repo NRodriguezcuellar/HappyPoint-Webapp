@@ -1,14 +1,13 @@
-FROM python:3.8
+# build stage
+FROM node:lts-alpine as build-stage
+WORKDIR .
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build
 
-COPY ./happypoint-web /app
-
-WORKDIR /app
-
-RUN pip install -r requirements.txt
-
-EXPOSE 8081
-
-CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8081", "--proxy-headers"]
-
-
-
+# production stage
+FROM nginx:stable-alpine as production-stage
+COPY --from=build-stage /app/dist /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
