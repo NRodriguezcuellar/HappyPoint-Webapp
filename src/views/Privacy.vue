@@ -5,7 +5,9 @@
         <div class="section column is-half privacy-text-container">
             <div class="container" v-for="(section, titles) in privacySections" :key="titles">
                 <H1 class="is-title p-md has-text-centered"> {{titles}}</H1>
-                <div class="has-text-centered"> {{section}}</div>
+                <div class="content-text-container">
+                    <div class="text-content" v-html="section"></div>
+                </div>
             </div>
         </div>
 
@@ -27,8 +29,9 @@
         data() {
             return {
                 privacySections: {
-                    "Data we collect": " lorem ipsum",
-                    "Privacy": "lorepm ipsum"
+                    "Data we collect": " <p>To be able to offer our services we process data. This data is considered <b>confidential</b> and is treated with care.</p>" +
+                        "<br> We primarily only <b>process</b> data, if we store data it is not the raw data we collect from the users, it is statistics data about the use of our service and trends that develop so we may further improve the service.",
+                    "Privacy": "We value your privacy and also understand that you may not want us to collect data about you, in that case you can opt-out of the service by going to the <a href='#'>following page</a>"
                 }
 
             }
@@ -37,6 +40,13 @@
 </script>
 
 <style scoped>
+    .content-text-container {
+        display: flex;
+        justify-content: center;
+    }
+    .text-content {
+        max-width: 450px;
+    }
 
     .image-wrapper {
         min-height: 300px;
@@ -60,8 +70,6 @@
         padding-left: 50px;
 
     }
-
-
 
 
 </style>
