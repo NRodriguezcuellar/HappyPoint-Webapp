@@ -6,7 +6,7 @@
                 <h1 class="easy-font is-title has-text-weight-semibold has-text-centered"> About us </h1>
             </div>
             <div class="column section">
-                <vue-slick-carousel class="about-us-carousel">
+                <vue-slick-carousel class="about-us-carousel" :dots="true">
                     <div class="about-us-column has-bg-blue">
                         <div class="column has-text-centered has-text-white carousel-font-size easy-font">The Mission
                         </div>
