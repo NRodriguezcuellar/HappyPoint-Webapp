@@ -23,6 +23,10 @@
         <div id="navbar" class="navbar-menu " :class="{ 'is-active': toggled}">
             <div class="navbar-end easy-font">
                 <router-link
+                        class="navbar-item" to="/service">
+                    Service
+                </router-link>
+                <router-link
                         class="navbar-item" to="/about">
                     About us
                 </router-link>

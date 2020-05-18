@@ -1,24 +1,28 @@
 <template>
+    <div>
 
-    <div class=" section columns">
+        <div class=" section columns">
 
-        <div class="section column is-half privacy-text-container">
-            <div class="container" v-for="(section, titles) in privacySections" :key="titles">
-                <H1 class="is-title p-md has-text-centered"> {{titles}}</H1>
-                <div class="content-text-container">
-                    <div class="text-content" v-html="section"></div>
+
+            <div class="section column is-half privacy-text-container">
+                 <div><h1 class="easy-font is-title has-text-weight-semibold has-text-centered"> Privacy </h1></div>
+                <div class="container" v-for="(section, titles) in privacySections" :key="titles">
+                    <H2 class=" p-md has-text-centered"> {{titles}}</H2>
+                    <div class="content-text-container">
+                        <div class="text-content" v-html="section"></div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="section image-container column is-one-fifth">
-            <div class="image-wrapper">
-                <div class="large-icon"><img src="~@/assets/securityLarge.png" alt="privacy icon"/></div>
-                <div class="medium-icon"><img src="~@/assets/securityMedium.png" alt="privacy icon"/></div>
-                <div class="small-icon"><img src="~@/assets/securitySmall.png" alt="privacy icon"/></div>
+            <div class="section image-container column is-one-fifth">
+                <div class="image-wrapper">
+                    <div class="large-icon"><img src="~@/assets/securityLarge.png" alt="privacy icon"/></div>
+                    <div class="medium-icon"><img src="~@/assets/securityMedium.png" alt="privacy icon"/></div>
+                    <div class="small-icon"><img src="~@/assets/securitySmall.png" alt="privacy icon"/></div>
+                </div>
             </div>
-        </div>
 
+        </div>
     </div>
 
 </template>
@@ -40,10 +44,17 @@
 </script>
 
 <style scoped>
+    h1 {
+        font-size: 40px;
+    }
+    h2 {
+        font-size: 25px;
+    }
     .content-text-container {
         display: flex;
         justify-content: center;
     }
+
     .text-content {
         max-width: 450px;
     }
