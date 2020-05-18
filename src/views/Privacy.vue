@@ -31,7 +31,7 @@
                 privacySections: {
                     "Data we collect": " <p>To be able to offer our services we process data. This data is considered <b>confidential</b> and is treated with care.</p>" +
                         "<br> We primarily only <b>process</b> data, if we store data it is not the raw data we collect from the users, it is statistics data about the use of our service and trends that develop so we may further improve the service.",
-                    "Privacy": "We value your privacy and also understand that you may not want us to collect data about you, in that case you can opt-out of the service by going to the <a href='#'>following page</a>"
+                    "Privacy": "We value your privacy and also understand that you may not want us to collect data about you, in that case you can opt-out of the service by going to the <a href='https://www.youtube.com/watch?v=dQw4w9WgXcQ'>following page</a>"
                 }
 
             }
