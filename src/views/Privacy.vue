@@ -53,9 +53,10 @@
         justify-content: flex-end;
         display: flex;
     }
+
     .small-icon {
         display: flex;
-        justify-content: start;
+        justify-content: flex-start;
         padding-left: 50px;
 
     }

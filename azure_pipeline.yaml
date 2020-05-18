@@ -1,0 +1,75 @@
+# Docker
+# Build a Docker image
+# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+
+trigger:
+  - master
+
+resources:
+  - repo: self
+
+variables:
+  tag: '$(Build.BuildId)'
+
+stages:
+  - stage: Build
+    displayName: Build image
+    jobs:
+      - job: Build
+        displayName: Build
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
+          - task: Docker@2
+            inputs:
+              containerRegistry: 'docker hub'
+              repository: 'borophu/bezettingsgraad'
+              command: 'buildAndPush'
+              Dockerfile: '**/Dockerfile'
+              tags: 'website-latest'
+
+  - stage: Webhook
+    displayName: Send webhook
+    jobs:
+      - job: Build
+        displayName: Build
+        pool: server
+        steps:
+          - task: InvokeRESTAPI@1
+            inputs:
+              connectionType: 'connectedServiceName'
+              serviceConnection: 'Discord webhook'
+              method: 'POST'
+              body: |
+                {
+                  "embeds": [
+                    {
+                      "title": "Website build information nr.$(Build.BuildId)",
+                      "color": 7375678,
+                      "footer": {
+                        "icon_url": "https://lh3.googleusercontent.com/proxy/Ok_oVXe0zkDJBhbgk4u1cJJMn2dPrNtyqKJfsibuRnUvt8r3qVrmSZ0UIhhUPjo_UDUO6kV3UYd11VGNMfNzA5VsFfN6tLmnK5myZbI2sZN38bXPfhPZykhTBZDTwnOVKoCrdtxVdUApkTPtIRtSVmdUH80",
+                        "text": "gesponsord door bor"
+                      },
+                      "thumbnail": {
+                        "url": "https://lh3.googleusercontent.com/proxy/Ok_oVXe0zkDJBhbgk4u1cJJMn2dPrNtyqKJfsibuRnUvt8r3qVrmSZ0UIhhUPjo_UDUO6kV3UYd11VGNMfNzA5VsFfN6tLmnK5myZbI2sZN38bXPfhPZykhTBZDTwnOVKoCrdtxVdUApkTPtIRtSVmdUH80"
+                      },
+                      "fields": [
+                        {
+                          "name": "Trigger",
+                          "value": "$(Build.Reason)",
+                          "inline": true
+                        },
+                        {
+                          "name": "BuildId",
+                          "value": "$(Build.SourceVersion)",
+                          "inline": true
+                        },
+                        {
+                          "name": "Tag",
+                          "value": "`borophu/bezettingsgraad:website-latest`"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              waitForCompletion: 'false'
