@@ -5,7 +5,7 @@
 
 
             <div class="section column is-half privacy-text-container">
-                 <div><h1 class="easy-font is-title has-text-weight-semibold has-text-centered"> Privacy </h1></div>
+                 <div><h1 class="easy-font is-title has-text-weight-semibold has-text-centered p-b-lg"> Privacy </h1></div>
                 <div class="container" v-for="(section, titles) in privacySections" :key="titles">
                     <H2 class=" p-md has-text-centered"> {{titles}}</H2>
                     <div class="content-text-container">

@@ -6,6 +6,10 @@
                 <v-select :value="$store.state.chosen_building" @input="select_building"
                           :options="$store.state.buildings"></v-select>
             </div>
+
+            <button class="button is-link" @click="confirm_building">Choose</button>
+            <small class="has-text-danger p-md button-warning hidden" id="warning">Please choose a building</small>
+
         </div>
 
     </div>
@@ -17,12 +21,24 @@
         methods: {
             select_building(val) {
                 this.$store.commit('select_building', val)
+            },
+            confirm_building() {
+                if (this.$store.state.chosen_building) {
+                    this.$router.push('/service/overview')
+                } else {
+                    const warning = document.getElementById('warning')
+                    warning.classList.toggle('hidden')
+                }
             }
         }
     }
 </script>
 
 <style scoped>
+    .hidden {
+        display: none;
+    }
+
     .buildings-container {
         display: flex;
         flex-direction: column;
