@@ -37,14 +37,9 @@ const routes = [
         component: () => import('../views/Service'),
     },
     {
-        path: '/service/heatmap',
-        name: 'heatmap',
-        component: () => import('../views/Service_heatmap')
-    },
-    {
-        path: '/service/overview',
-        name: 'overview',
-        component: () => import('../views/Service_overview')
+        path: '/service/data',
+        name: 'data',
+        component: () => import('../views/Service_data')
     }
 
 ];

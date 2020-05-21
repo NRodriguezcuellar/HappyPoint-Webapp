@@ -7,7 +7,7 @@
                           :options="$store.state.buildings"></v-select>
             </div>
 
-            <button class="button is-link" @click="confirm_building">Choose</button>
+            <button class="button has-bg-blue has-text-white" @click="confirm_building">Choose</button>
             <small class="has-text-danger p-md button-warning hidden" id="warning">Please choose a building</small>
 
         </div>
@@ -24,7 +24,7 @@
             },
             confirm_building() {
                 if (this.$store.state.chosen_building) {
-                    this.$router.push('/service/overview')
+                    this.$router.push('/service/data')
                 } else {
                     const warning = document.getElementById('warning')
                     warning.classList.toggle('hidden')
@@ -35,6 +35,10 @@
 </script>
 
 <style scoped>
+    .button {
+        border:none;
+    }
+
     .hidden {
         display: none;
     }

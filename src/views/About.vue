@@ -40,5 +40,8 @@
 </script>
 
 <style>
+    .about-us-column {
+
+    }
 
 </style>
