@@ -6,11 +6,9 @@
             <div class="data-parent-container">
                 <div class="heatmap-container">
                     <heatmap></heatmap>
-
                 </div>
                 <div class="graph-container">
-                    <div></div>
-                    <div></div>
+                    <div><bar-chart></bar-chart></div>
                 </div>
             </div>
         </div>
@@ -22,10 +20,11 @@
 
 <script>
     import Heatmap from "../components/heatmap";
+    import BarChart from "../components/barChart";
 
     export default {
         name: "Service_heatmap",
-        components: {Heatmap}
+        components: {BarChart, Heatmap}
     }
 </script>
 
@@ -33,10 +32,15 @@
     .heatmap-container {
         padding: 2rem;
     }
+    .graph-container {
+        padding: 2rem;
+    }
 
     .data-parent-container {
         max-width: 700px;
         padding: 15px;
+        display: flex;
+        align-items: center;
     }
 
     .data-grandparent-container {
@@ -78,6 +82,10 @@
 
         .title {
             padding-bottom: 1rem;
+        }
+
+        .data-parent-container {
+            flex-direction: column;
         }
 
 
