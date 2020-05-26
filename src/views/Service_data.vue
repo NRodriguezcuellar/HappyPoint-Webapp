@@ -5,10 +5,10 @@
                 {{this.$store.state.chosen_building}}</h1></div>
             <div class="data-parent-container">
                 <div class="heatmap-container">
-                    <heatmap></heatmap>
+                    <heatmap/>
                 </div>
                 <div class="graph-container">
-                    <div><bar-chart></bar-chart></div>
+                    <div><bar-chart/></div>
                 </div>
             </div>
         </div>
@@ -21,6 +21,8 @@
 <script>
     import Heatmap from "../components/heatmap";
     import BarChart from "../components/barChart";
+
+
 
     export default {
         name: "Service_heatmap",

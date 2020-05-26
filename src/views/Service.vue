@@ -24,19 +24,5 @@
 </script>
 
 <style scoped>
-    .buildings-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .buildings-input {
-        min-width: 350px;
-    }
-
-    .buildings-title {
-        font-size: 40px;
-        text-align: center;
-    }
 
 </style>
