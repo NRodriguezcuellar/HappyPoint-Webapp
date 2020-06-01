@@ -24,7 +24,7 @@
             },
             confirm_building() {
                 if (this.$store.state.chosen_building) {
-                    this.$router.push('/service/data')
+                    this.$router.push(`/service/${this.$store.state.chosen_building}`)
                 } else {
                     const warning = document.getElementById('warning')
                     warning.classList.toggle('hidden')
@@ -36,7 +36,7 @@
 
 <style scoped>
     .button {
-        border:none;
+        border: none;
     }
 
     .hidden {

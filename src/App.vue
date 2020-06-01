@@ -13,7 +13,7 @@
         flex-direction: column;
     }
 </style>
-n
+
 <script>
     import "./assets/happypoint.css"
     import 'bulma/css/bulma.min.css'
@@ -24,3 +24,4 @@ n
         components: {FooterComponent, Navbar}
     }
 </script>
+
