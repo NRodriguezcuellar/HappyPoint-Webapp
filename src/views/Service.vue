@@ -1,7 +1,7 @@
 <template>
     <div class="root-container">
         <div class="parent-container has-bg-blue">
-            <building-chooser></building-chooser>
+            <building-chooser :buildings="buildings"></building-chooser>
         </div>
     </div>
 
@@ -16,7 +16,9 @@
         name: "Service",
         components: {BuildingChooser},
         data: function () {
-            return {}
+            return {
+                buildings: ['Heidelberglaan 15'],
+            }
 
 
         }
@@ -26,12 +28,14 @@
 <style scoped>
 
     .parent-container {
-        min-height: 80vh;
+        min-height: 60vh;
         padding: 20px;
-        width: 1200px;
+        width: 700px;
+        margin-top: 15px;
 
         display: flex;
         flex-direction: column;
+        justify-content: center;
         align-items: center;
         border-radius: 10px;
     }

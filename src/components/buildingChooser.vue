@@ -3,13 +3,14 @@
         <div class="buildings-container">
             <div class="buildings-title section has-text-white"> Search your building</div>
             <div class="section select-container">
-                <div class="buildings-input section">
+                <div class="buildings-input">
                     <v-select :value="$store.state.chosen_building" @input="select_building"
-                              :options="$store.state.buildings" class="select-bar"></v-select>
+                              :options="buildings" class="select-bar"></v-select>
                 </div>
-
-                <button class="button is-hp-green-button" @click="confirm_building">Choose</button>
-                <small class="has-text-white p-md  hidden" id="warning">Please choose a building</small>
+                <div class="section button-container">
+                    <button class="button is-hp-green-button" @click="confirm_building">Choose</button>
+                    <small class="has-text-white p-md  hidden" id="warning">Please choose a building</small>
+                </div>
             </div>
 
         </div>
@@ -32,11 +33,23 @@
                     warning.classList.toggle('hidden')
                 }
             }
+        },
+        props: {
+            buildings: Array
         }
     }
 </script>
 
 <style scoped>
+    .is-hp-green-button {
+        width: 80px;
+    }
+    .button-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
     .select-container {
         display: flex;
         justify-content: center;

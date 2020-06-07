@@ -11,6 +11,9 @@
             <button class="heatmap-next fas fa-arrow-right fa-lg" @click="right_arrow"></button>
         </div>
         <div class="has-text-centered has-text-white floor-title easy-font">
+            <div class="progress-container">
+                <progress class="progress is-success" v-bind:value="progress" max="100">60%</progress>
+            </div>
             <div class="sub-content-container">
                 <div class="fas fa-arrow-left fa-sm heatmap-small-prev" @click="left_arrow"></div>
                 <div><h2 v-text="`Floor ${floor}`"></h2></div>
@@ -39,7 +42,8 @@
             max: Number,
             left_arrow: Function,
             right_arrow: Function,
-            floor: Number
+            floor: Number,
+            progress: Number
         }
 
 
@@ -47,6 +51,15 @@
 </script>
 
 <style scoped>
+    .progress-container {
+        display: flex;
+        justify-content: center;
+    }
+    .progress {
+        width: 270px;
+
+    }
+
     .sub-content-container {
         display: flex;
         justify-content: space-around;

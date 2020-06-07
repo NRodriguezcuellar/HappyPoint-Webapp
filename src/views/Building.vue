@@ -5,8 +5,14 @@
                 {{buildingInfo.name}}</h1></div>
             <div class="data-parent-container">
                 <div class="heatmap-container">
-                    <heatmap :data="heatmap_data" :min="min" :max="max" :left_arrow="send_alert"
+                    <heatmap :data="heatmap_data" :min="min" :max="max" :progress="20" :left_arrow="send_alert"
                              :right_arrow="send_alert" :floor="parseInt(this.floor)"/>
+                    <div class="busyness-navigation-grandparent">
+                        <div class="busyness-navigation-parent">
+                            <button class="busyness-navigation-button button-left easy-font">Heatmap</button>
+                            <button class="busyness-navigation-button button-right easy-font">Overview</button>
+                        </div>
+                    </div>
 
                 </div>
             </div>
@@ -51,7 +57,8 @@
                 error: null,
                 loaded: false,
                 buildingInfo: null,
-                websocket: null
+                websocket: null,
+                progress: 20
 
 
             }
@@ -98,6 +105,41 @@
 </script>
 
 <style scoped>
+    .busyness-navigation-grandparent {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .busyness-navigation-button {
+        padding: 0.8rem;
+        border: none;
+        display: inline-block;
+        color: #ffffff;
+        background-color: #7ED321;
+    }
+
+    .busyness-navigation-button:hover {
+        background-color: rgba(126, 211, 33, 0.85);
+
+    }
+
+    .button-right {
+        border-radius: 0 10px 10px 0;
+        border-left: 1px solid #ffffff;
+
+    }
+
+    .button-left {
+        border-radius: 10px 0 0 10px;
+    }
+
+    .busyness-navigation-parent {
+        border-radius: 10px;
+    }
 
 
     .heatmap-container {

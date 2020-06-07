@@ -8,11 +8,11 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
         chosen_building: null,
-        buildings: ['Heidelberglaan 15'],
         connected: false,
         error: null,
         chatMessages: [],
-        limit: 5
+        limit: 5,
+        currentFloor: null
     },
 
     mutations: {
