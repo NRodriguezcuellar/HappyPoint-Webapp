@@ -39,14 +39,8 @@ const routes = [
         {
             path: '/service/:building',
             name: 'Building',
-            component: () => import('../views/Service_data'),
-            children: [{
-                // UserProfile will be rendered inside User's <router-view>
-                // when /user/:id/profile is matched
-                path: ':floor',
-                component: () => import('../views/Building')
+            component: () => import('../views/Building'),
 
-            }]
         }
 
     ]

@@ -10,6 +10,15 @@
             </div>
             <button class="heatmap-next fas fa-arrow-right fa-lg" @click="right_arrow"></button>
         </div>
+        <div class="has-text-centered has-text-white floor-title easy-font">
+            <div class="sub-content-container">
+                <div class="fas fa-arrow-left fa-sm heatmap-small-prev" @click="left_arrow"></div>
+                <div><h2 v-text="`Floor ${floor}`"></h2></div>
+                <div class="fas fa-arrow-right fa-sm heatmap-small-next" @click="right_arrow"></div>
+            </div>
+
+
+        </div>
     </div>
 
 </template>
@@ -21,17 +30,16 @@
     export default {
         name: "heatmap",
         data: function () {
-            return {
-
-            }
+            return {}
 
         },
         props: {
             data: Array,
             min: Number,
-            max:Number,
-            left_arrow:Function,
-            right_arrow:Function
+            max: Number,
+            left_arrow: Function,
+            right_arrow: Function,
+            floor: Number
         }
 
 
@@ -39,10 +47,21 @@
 </script>
 
 <style scoped>
+    .sub-content-container {
+        display: flex;
+        justify-content: space-around;
+        padding: 10px;
+    }
+
+
+    .floor-title {
+        font-size: 20px;
+        padding: 10px;
+    }
 
 
     .heatmap-next, .heatmap-prev {
-        top: 50%;
+        top: 300px;
         height: auto;
         margin: 30px;
         color: white;
@@ -85,7 +104,22 @@
         border-radius: 10px;
     }
 
-    @media all and (max-width: 768px) {
+    .heatmap-small-prev, .heatmap-small-next {
+        display: none;
+
+    }
+
+    @media all and (max-width: 380px) {
+        .heatmap-prev, .heatmap-next {
+            display: none;
+
+        }
+
+        .heatmap-small-prev, .heatmap-small-next {
+            display: block;
+
+        }
+
 
     }
 

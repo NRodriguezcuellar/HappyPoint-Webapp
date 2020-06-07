@@ -74,6 +74,12 @@ html, body {
     min-width: 130px;
 }
 
+.is-hp-green-button {
+    color: #ffffff !important;
+    background-color: #7ED321 !important;
+
+}
+
 
 .is-column {
     flex-direction: column;

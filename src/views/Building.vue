@@ -2,13 +2,12 @@
     <div class="root-container">
         <div class="has-bg-blue data-grandparent-container" v-if="loaded">
             <div class="title-container"><h1 class="title easy-font has-text-left">
-                {{chosen_building}}</h1></div>
+                {{buildingInfo.name}}</h1></div>
             <div class="data-parent-container">
                 <div class="heatmap-container">
                     <heatmap :data="heatmap_data" :min="min" :max="max" :left_arrow="send_alert"
-                             :right_arrow="send_alert"/>
-                    <div class="has-text-centered has-text-white floor-title easy-font"><h2
-                            v-text="`Floor ${floor}`"></h2></div>
+                             :right_arrow="send_alert" :floor="parseInt(this.floor)"/>
+
                 </div>
             </div>
         </div>
@@ -20,24 +19,27 @@
         </div>
         <div class="has-text-centered" v-else-if="error"> Something went wrong.. Try again later.</div>
     </div>
-
 </template>
 
 <script>
     import Heatmap from "../components/heatmap";
+
 
     export default {
         name: "Building",
         components: {Heatmap},
         computed: {
             chosen_building: function () {
+
                 return this.$store.state.chosen_building
 
             },
             floor: function () {
-                return this.$store.state.floor
+
+                return this.buildingInfo.floorstart
 
             }
+
 
         },
         data() {
@@ -47,7 +49,9 @@
                 max: 100,
                 loading: false,
                 error: null,
-                loaded: false
+                loaded: false,
+                buildingInfo: null,
+                websocket: null
 
 
             }
@@ -56,6 +60,10 @@
 
         created() {
             this.fetchInfo()
+
+
+        },
+        destroyed() {
 
         },
 
@@ -67,10 +75,15 @@
             fetchInfo() {
                 this.loading = true
 
-                this.axios.get(`https://api.happypoint.works/heatmap/${this.$route.params.building}`).then(response => {
-                    console.log(response)
-                })
-
+                this.axios.get(`https://api.happypoint.works/heatmap/${this.$route.params.building}`)
+                    .then(response => {
+                        this.buildingInfo = response.data;
+                        this.loading = false;
+                        this.loaded = true;
+                    })
+                    .catch(() => {
+                        this.error = true;
+                    })
 
 
             }
@@ -86,10 +99,6 @@
 
 <style scoped>
 
-    .floor-title {
-        font-size: 20px;
-        padding: 10px;
-    }
 
     .heatmap-container {
 
@@ -117,7 +126,7 @@
     }
 
     .root-container {
-        padding: 3rem;
+        padding: 2rem;
         display: flex;
         justify-content: center;
     }
@@ -135,7 +144,7 @@
         }
 
         .root-container {
-            padding: 0.25rem;
+            padding: 0;
             margin-top: 1rem;
         }
 

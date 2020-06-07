@@ -1,14 +1,16 @@
 <template>
     <div>
-        <div class="buildings-container section">
-            <div class="buildings-title section"> Search your building</div>
-            <div class="buildings-input section">
-                <v-select :value="$store.state.chosen_building" @input="select_building"
-                          :options="$store.state.buildings"></v-select>
-            </div>
+        <div class="buildings-container">
+            <div class="buildings-title section has-text-white"> Search your building</div>
+            <div class="section select-container">
+                <div class="buildings-input section">
+                    <v-select :value="$store.state.chosen_building" @input="select_building"
+                              :options="$store.state.buildings" class="select-bar"></v-select>
+                </div>
 
-            <button class="button has-bg-blue has-text-white" @click="confirm_building">Choose</button>
-            <small class="has-text-danger p-md button-warning hidden" id="warning">Please choose a building</small>
+                <button class="button is-hp-green-button" @click="confirm_building">Choose</button>
+                <small class="has-text-white p-md  hidden" id="warning">Please choose a building</small>
+            </div>
 
         </div>
 
@@ -35,6 +37,18 @@
 </script>
 
 <style scoped>
+    .select-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .select-bar {
+        background-color: #ffffff;
+        border-radius: 3px;
+    }
+
     .button {
         border: none;
     }
@@ -56,6 +70,7 @@
     .buildings-title {
         font-size: 40px;
         text-align: center;
+
     }
 
 </style>

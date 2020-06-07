@@ -2,49 +2,59 @@ import Vue from "vue";
 import Vuex from "vuex";
 
 
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
         chosen_building: null,
-        buildings: ['Heidelberglaan 15', 'Padualaan', 'Bibliotheek uithof'],
-        floor: 1,
-        socket: {
-            isConnected: false,
-            message: '',
-            reconnectError: false,
-        }
+        buildings: ['Heidelberglaan 15'],
+        connected: false,
+        error: null,
+        chatMessages: [],
+        limit: 5
     },
 
     mutations: {
         select_building(state, input) {
             state.chosen_building = input
         },
-        SOCKET_ONOPEN(state, event) {
-            Vue.prototype.$socket = event.currentTarget
-            state.socket.isConnected = true
+        ADD_MESSAGE(state, message) {
+            while (state.chatMessages.length >= state.limit) {
+                state.chatMessages.shift();
+            }
+            state.chatMessages.push(message);
         },
-        SOCKET_ONCLOSE(state) {
-            state.socket.isConnected = false
+        DELETE_MESSAGE(state, message) {
+            state.chatMessages = state.chatMessages.filter(m => m.id !== message.id);
         },
-        SOCKET_ONERROR(state, event) {
-            console.error(event)
+        SET_CONNECTION(state, message) {
+            state.connected = message;
         },
-        // default handler called for all methods
-        SOCKET_ONMESSAGE(state, message) {
-            state.socket.message = message
-        },
-        // mutations for reconnect methods
-        SOCKET_RECONNECT(state, count) {
-            console.info(count)
-        },
-        SOCKET_RECONNECT_ERROR(state) {
-            state.socket.reconnectError = true;
-        },
+        SET_ERROR(state, error) {
+            state.error = error;
+        }
+
 
     },
 
-    actions: {},
+    actions: {
+        addMessage({commit}, message) {
+            commit('ADD_MESSAGE', message);
+        },
+        deleteMessage({commit}, message) {
+            commit('DELETE_MESSAGE', message);
+        },
+        connectionOpened({commit}) {
+            commit('SET_CONNECTION', true);
+        },
+        connectionClosed({commit}) {
+            commit('SET_CONNECTION', false);
+        },
+        connectionError({commit}, error) {
+            commit('SET_ERROR', error);
+        }
+    },
     modules: {},
     plugins: []
 });
