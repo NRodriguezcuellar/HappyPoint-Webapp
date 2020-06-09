@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="buildings-container">
-            <div class="buildings-title section has-text-white"> Search your building</div>
+            <div class="buildings-title section has-text-white is-title"> Search your building</div>
             <div class="section select-container">
                 <div class="buildings-input">
                     <v-select :value="$store.state.chosen_building" @input="select_building"
@@ -59,7 +59,10 @@
 
     .select-bar {
         background-color: #ffffff;
-        border-radius: 3px;
+        border-radius: 5px;
+        min-width: 300px;
+
+
     }
 
     .button {
@@ -78,11 +81,19 @@
 
     .buildings-input {
         min-width: 350px;
+        display: flex;
+        justify-content: center;
     }
 
     .buildings-title {
         font-size: 40px;
         text-align: center;
+
+    }
+    @media all and (max-width: 430px){
+        .section {
+            padding: 3rem 0;
+        }
 
     }
 

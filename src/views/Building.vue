@@ -4,16 +4,20 @@
             <div class="title-container"><h1 class="title easy-font has-text-left">
                 {{buildingInfo.name}}</h1></div>
             <div class="data-parent-container">
-                <div class="heatmap-container">
-                    <heatmap :data="heatmap_data" :min="min" :max="max" :progress="20" :left_arrow="send_alert"
-                             :right_arrow="send_alert" :floor="parseInt(this.floor)"/>
-                    <div class="busyness-navigation-grandparent">
-                        <div class="busyness-navigation-parent">
-                            <button class="busyness-navigation-button button-left easy-font">Heatmap</button>
-                            <button class="busyness-navigation-button button-right easy-font">Overview</button>
-                        </div>
-                    </div>
-
+                <div class="heatmap-container" v-if="!overviewToggled">
+                    <heatmap :data="heatmap_data" :min="min" :max="max" :progress="20" :left_arrow="previousFloor"
+                             :right_arrow="nextFloor" :floor="parseInt(this.floor)" :picture-source="picture_source"/>
+                </div>
+                <div class="overview-parent-container" v-if="overviewToggled">
+                    <progress-bar/>
+                </div>
+            </div>
+            <div class="busyness-navigation-grandparent">
+                <div class="busyness-navigation-parent">
+                    <button class="busyness-navigation-button button-left easy-font" @click="toggleHeatmap">Heatmap
+                    </button>
+                    <button class="busyness-navigation-button button-right easy-font" @click="toggleOverview">Overview
+                    </button>
                 </div>
             </div>
         </div>
@@ -23,17 +27,19 @@
             <div></div>
             <div></div>
         </div>
-        <div class="has-text-centered" v-else-if="error"> Something went wrong.. Try again later.</div>
+        <div class="has-text-centered" v-if="error"> Something went wrong.. Try again later.</div>
     </div>
 </template>
 
 <script>
     import Heatmap from "../components/heatmap";
+    import ProgressBar from "../components/progressBar";
+    import initConn from "../assets/signalr";
 
 
     export default {
         name: "Building",
-        components: {Heatmap},
+        components: {ProgressBar, Heatmap},
         computed: {
             chosen_building: function () {
 
@@ -42,23 +48,32 @@
             },
             floor: function () {
 
-                return this.buildingInfo.floorstart
+                return this.$store.state.currentFloor
+
+            },
+            overviewToggled: function () {
+                return this.$store.state.overviewToggled
+
+            },
+            loading: function () {
+                return !(this.loaded === true || this.error === true);
+
+            },
+            picture_source: function () {
+                return `${this.$store.state.baseUrl}/heatmap/${this.$route.params.building}/${this.$store.state.currentFloor}/img`
 
             }
-
-
         },
         data() {
             return {
                 heatmap_data: [{x: 50, y: 50, value: 90}, {x: 200, y: 142, value: 90}],
                 min: 0,
                 max: 100,
-                loading: false,
                 error: null,
                 loaded: false,
                 buildingInfo: null,
                 websocket: null,
-                progress: 20
+                progress: 20,
 
 
             }
@@ -70,32 +85,42 @@
 
 
         },
-        destroyed() {
-
-        },
-
         methods: {
-            send_alert: function () {
-                alert("yes")
+            previousFloor: function () {
+                if (this.floor > this.buildingInfo.floorstart) {
+                    this.$store.commit('previousFloor')
+                }
+
+            },
+
+            nextFloor: function () {
+                if (this.floor < this.buildingInfo.height)
+                    this.$store.commit('nextFloor')
 
             },
             fetchInfo() {
-                this.loading = true
 
-                this.axios.get(`https://api.happypoint.works/heatmap/${this.$route.params.building}`)
+
+                this.axios.get(`${this.$store.state.baseUrl}/heatmap/${this.$route.params.building}`)
                     .then(response => {
+                        initConn()
                         this.buildingInfo = response.data;
-                        this.loading = false;
                         this.loaded = true;
+
                     })
                     .catch(() => {
+
                         this.error = true;
-                    })
+                    });
 
 
+            },
+            toggleOverview() {
+                this.$store.commit('toggleOverview', true)
+            },
+            toggleHeatmap() {
+                this.$store.commit('toggleOverview', false)
             }
-
-
         },
         mounted() {
 
@@ -110,8 +135,8 @@
         justify-content: center;
         align-items: center;
         border-radius: 10px;
-        margin-top: 20px;
-        margin-bottom: 20px;
+        margin-top: 5px;
+        margin-bottom: 30px;
     }
 
     .busyness-navigation-button {
@@ -155,16 +180,18 @@
         padding: 15px;
         display: flex;
         align-items: center;
+        height: 670px;
     }
 
     .data-grandparent-container {
-        min-height: 80vh;
+        min-height: 850px;
         padding: 20px;
         width: 1200px;
         display: flex;
         flex-direction: column;
         align-items: center;
         border-radius: 10px;
+        overflow: hidden;
     }
 
     .root-container {
@@ -180,6 +207,7 @@
     }
 
     @media all and (max-width: 768px) {
+
         .data-grandparent-container {
             border-radius: 0;
             padding: 0;
@@ -202,6 +230,22 @@
             flex-direction: column;
         }
 
+
+    }
+
+    @media all and (max-width: 430px) {
+        .busyness-navigation-grandparent {
+            z-index: 1;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin-bottom: 10px;
+        }
+
+        .busyness-navigation-button {
+            padding: 15px;
+        }
 
     }
 

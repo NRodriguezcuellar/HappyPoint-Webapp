@@ -1,27 +1,30 @@
 <template>
     <div class="root-container-heatmap">
         <div class="parent-white-container">
-            <button class="heatmap-prev fas fa-arrow-left fa-lg" @click="left_arrow"></button>
+            <button class="arrow-btn heatmap-prev" @click="left_arrow"><i class=" fas fa-arrow-left fa-lg"></i></button>
             <div class="white-container">
                 <heatmapjs-vue class="parent-container" :data="data" :min="min"
                                :max="max">
-                    <img src="~@/assets/floor_0.png" alt="floor plan for floor 0 " class="floor-plan"/>
+                    <img :src="pictureSource" alt="floor plan for floor 0 " class="floor-plan"/>
                 </heatmapjs-vue>
             </div>
-            <button class="heatmap-next fas fa-arrow-right fa-lg" @click="right_arrow"></button>
+            <button class="arrow-btn heatmap-next" @click="right_arrow"><i class=" fas fa-arrow-right fa-lg"></i>
+            </button>
         </div>
+
         <div class="has-text-centered has-text-white floor-title easy-font">
             <div class="progress-container">
                 <progress class="progress is-success" v-bind:value="progress" max="100">60%</progress>
             </div>
             <div class="sub-content-container">
-                <div class="fas fa-arrow-left fa-sm heatmap-small-prev" @click="left_arrow"></div>
+                <div class="arrow-btn" @click="left_arrow"><i class="fas fa-arrow-left fa-sm heatmap-small-prev"></i>
+                </div>
                 <div><h2 v-text="`Floor ${floor}`"></h2></div>
-                <div class="fas fa-arrow-right fa-sm heatmap-small-next" @click="right_arrow"></div>
+                <div class="arrow-btn" @click="right_arrow"><i class="fas fa-arrow-right fa-sm heatmap-small-next"></i>
+                </div>
             </div>
-
-
         </div>
+
     </div>
 
 </template>
@@ -43,7 +46,8 @@
             left_arrow: Function,
             right_arrow: Function,
             floor: Number,
-            progress: Number
+            progress: Number,
+            pictureSource: String
         }
 
 
@@ -51,10 +55,17 @@
 </script>
 
 <style scoped>
+    .arrow-btn {
+        border: none;
+        background-color: rgba(255, 255, 255, 0);
+        border-radius: 0;
+    }
+
     .progress-container {
         display: flex;
         justify-content: center;
     }
+
     .progress {
         width: 270px;
 

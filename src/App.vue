@@ -21,7 +21,12 @@
     import FooterComponent from "./components/footerComponent";
 
     export default {
-        components: {FooterComponent, Navbar}
+        components: {FooterComponent, Navbar},
+        data() {
+            return {
+                baseUrl: "http://localhost:8080"
+            }
+        }
     }
 </script>
 

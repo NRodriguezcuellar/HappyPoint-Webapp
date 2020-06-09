@@ -8,53 +8,31 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
         chosen_building: null,
-        connected: false,
-        error: null,
-        chatMessages: [],
-        limit: 5,
-        currentFloor: null
+        currentFloor: 0,
+        overviewToggled: false,
+        baseUrl: "http://localhost:8080"
     },
 
     mutations: {
         select_building(state, input) {
             state.chosen_building = input
         },
-        ADD_MESSAGE(state, message) {
-            while (state.chatMessages.length >= state.limit) {
-                state.chatMessages.shift();
-            }
-            state.chatMessages.push(message);
-        },
-        DELETE_MESSAGE(state, message) {
-            state.chatMessages = state.chatMessages.filter(m => m.id !== message.id);
-        },
-        SET_CONNECTION(state, message) {
-            state.connected = message;
-        },
-        SET_ERROR(state, error) {
-            state.error = error;
-        }
 
+        toggleOverview(state, boolean) {
+            state.overviewToggled = boolean
+        },
+
+        nextFloor(state) {
+            state.currentFloor++
+
+        },
+        previousFloor(state) {
+            state.currentFloor--
+        }
 
     },
 
-    actions: {
-        addMessage({commit}, message) {
-            commit('ADD_MESSAGE', message);
-        },
-        deleteMessage({commit}, message) {
-            commit('DELETE_MESSAGE', message);
-        },
-        connectionOpened({commit}) {
-            commit('SET_CONNECTION', true);
-        },
-        connectionClosed({commit}) {
-            commit('SET_CONNECTION', false);
-        },
-        connectionError({commit}, error) {
-            commit('SET_ERROR', error);
-        }
-    },
+    actions: {},
     modules: {},
     plugins: []
 });
