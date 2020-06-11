@@ -4,8 +4,8 @@
             <button class="arrow-btn heatmap-prev" @click="left_arrow"><i class=" fas fa-arrow-left fa-lg"></i></button>
             <div class="white-container">
                 <heatmapjs-vue class="parent-container" :data="data" :min="min"
-                               :max="max">
-                    <img :src="pictureSource" alt="floor plan for floor 0 " class="floor-plan"/>
+                               :max="max" ref="heatmap">
+                    <img :src="pictureSource" alt="floor plan for floor 0 "  class="floor-plan"/>
                 </heatmapjs-vue>
             </div>
             <button class="arrow-btn heatmap-next" @click="right_arrow"><i class=" fas fa-arrow-right fa-lg"></i>

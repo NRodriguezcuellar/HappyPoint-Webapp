@@ -34,18 +34,18 @@
 <script>
     import Heatmap from "../components/heatmap";
     import ProgressBar from "../components/progressBar";
-    import initConn from "../assets/signalr";
+    import {HubConnectionBuilder, LogLevel} from '@aspnet/signalr';
+
+    const client = new HubConnectionBuilder()
+        .configureLogging(LogLevel.Warning)
+        .withUrl('http://localhost:8080/heatmap/data')
+        .build();
 
 
     export default {
         name: "Building",
         components: {ProgressBar, Heatmap},
         computed: {
-            chosen_building: function () {
-
-                return this.$store.state.chosen_building
-
-            },
             floor: function () {
 
                 return this.$store.state.currentFloor
@@ -62,7 +62,11 @@
             picture_source: function () {
                 return `${this.$store.state.baseUrl}/heatmap/${this.$route.params.building}/${this.$store.state.currentFloor}/img`
 
+            },
+            buildingWidth: function () {
+                return this.buildingInfo.width
             }
+
         },
         data() {
             return {
@@ -72,38 +76,47 @@
                 error: null,
                 loaded: false,
                 buildingInfo: null,
-                websocket: null,
+                floorData: null,
                 progress: 20,
-
-
             }
 
         },
 
         created() {
             this.fetchInfo()
-
-
         },
         methods: {
             previousFloor: function () {
                 if (this.floor > this.buildingInfo.floorstart) {
+
                     this.$store.commit('previousFloor')
+
+                    this.changeFloor(this.floor)
+                    console.log(this.$refs['heatmap'])
+
                 }
 
             },
 
             nextFloor: function () {
-                if (this.floor < this.buildingInfo.height)
+                if (this.floor < this.buildingInfo.height) {
+
                     this.$store.commit('nextFloor')
 
-            },
-            fetchInfo() {
+                    this.changeFloor(this.floor)
+                }
 
+            },
+
+            fetchInfo() {
 
                 this.axios.get(`${this.$store.state.baseUrl}/heatmap/${this.$route.params.building}`)
                     .then(response => {
-                        initConn()
+                        client.start().then(() => this.changeFloor(this.floor))
+                        client.on('ReceiveUpdate', res => {
+                            console.log(res);
+                            this.floorData = res
+                        });
                         this.buildingInfo = response.data;
                         this.loaded = true;
 
@@ -115,17 +128,43 @@
 
 
             },
+
             toggleOverview() {
                 this.$store.commit('toggleOverview', true)
             },
+
             toggleHeatmap() {
                 this.$store.commit('toggleOverview', false)
+            },
+
+            changeFloor(floor) {
+                client.invoke('ChangeFloor', 'Heidelberglaan 15', floor).then(res => console.log(res, "ok")).catch(err => console.log(err, "error "))
+
+            },
+            heatmapParse(points) {
+                let parsedPoints = []
+                const floorplanWidth = 290
+                const buildingWidth = parseInt(this.buildingWidth)
+                const heatmapScale = floorplanWidth/ buildingWidth
+
+                for (let point of points) {
+                    let parsedPointX =   parseInt(point[0]) * heatmapScale
+                    let parsedPointZ =  parseInt(point[1])  * heatmapScale
+                    parsedPoints.push(`${parsedPointX}, ${parsedPointZ}`)
+                }
+                console.log(parsedPoints)
+                console.log(this.$refs.heatmap)
+
+                return parsedPoints
+
+
             }
+
         },
         mounted() {
 
-
         }
+
     }
 </script>
 
@@ -171,9 +210,6 @@
 
     }
 
-    .graph-container {
-        padding: 2rem;
-    }
 
     .data-parent-container {
         max-width: 700px;
@@ -184,8 +220,7 @@
     }
 
     .data-grandparent-container {
-        min-height: 850px;
-        padding: 20px;
+        padding: 50px;
         width: 1200px;
         display: flex;
         flex-direction: column;
@@ -245,6 +280,10 @@
 
         .busyness-navigation-button {
             padding: 15px;
+        }
+
+        .data-grandparent-container {
+            min-height: 0;
         }
 
     }
