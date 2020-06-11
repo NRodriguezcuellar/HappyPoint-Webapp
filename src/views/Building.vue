@@ -5,11 +5,13 @@
                 {{buildingInfo.name}}</h1></div>
             <div class="data-parent-container">
                 <div class="heatmap-container" v-if="!overviewToggled">
-                    <heatmap :data="heatmap_data" :min="min" :max="max" :progress="20" :left_arrow="previousFloor"
-                             :right_arrow="nextFloor" :floor="parseInt(this.floor)" :picture-source="picture_source"/>
+                    <heatmap :data="floorData" :min="min" :max="max" :progress="parseInt(this.currentFloorPercentage[0].percentage)" :left_arrow="previousFloor"
+                             :right_arrow="nextFloor" :floor="parseInt(this.currentFloorPercentage[0].floor)"
+                             :picture-source="picture_source"
+                             v-if="overviewLoaded"/>
                 </div>
                 <div class="overview-parent-container" v-if="overviewToggled">
-                    <progress-bar/>
+                    <progress-bar :floor-percentage-info="this.overviewData" v-if="overviewLoaded"/>
                 </div>
             </div>
             <div class="busyness-navigation-grandparent">
@@ -51,20 +53,35 @@
                 return this.$store.state.currentFloor
 
             },
+
             overviewToggled: function () {
                 return this.$store.state.overviewToggled
 
             },
+
             loading: function () {
                 return !(this.loaded === true || this.error === true);
 
             },
+
             picture_source: function () {
                 return `${this.$store.state.baseUrl}/heatmap/${this.$route.params.building}/${this.$store.state.currentFloor}/img`
 
             },
+
             buildingWidth: function () {
                 return this.buildingInfo.width
+            },
+
+            buildingLength: function () {
+                return this.buildingInfo.length
+            },
+            currentFloorPercentage: function () {
+
+                return this.overviewData.filter(items => {
+                    return parseInt(items.floor) === parseInt(this.floor)
+
+                })
             }
 
         },
@@ -78,6 +95,11 @@
                 buildingInfo: null,
                 floorData: null,
                 progress: 20,
+                heatmapLoaded: false,
+                overviewLoaded: false,
+                floorplanWidth: 240,
+                floorplanHeight: 500,
+                overviewData: null
             }
 
         },
@@ -92,7 +114,7 @@
                     this.$store.commit('previousFloor')
 
                     this.changeFloor(this.floor)
-                    console.log(this.$refs['heatmap'])
+
 
                 }
 
@@ -112,17 +134,28 @@
 
                 this.axios.get(`${this.$store.state.baseUrl}/heatmap/${this.$route.params.building}`)
                     .then(response => {
-                        client.start().then(() => this.changeFloor(this.floor))
-                        client.on('ReceiveUpdate', res => {
-                            console.log(res);
-                            this.floorData = res
-                        });
                         this.buildingInfo = response.data;
+
+                        this.start()
+                            .then(() => this.changeFloor(this.floor))
+                            .then(() => this.changeBuilding())
+
+                        client.on('ReceiveUpdate', res => {
+                            this.heatmapLoaded = false
+                            this.heatmapParse(res)
+                            this.heatmapLoaded = true
+                        });
+
+                        client.on('ReceiveBuildingUpdate', res => {
+                            this.overviewParse(res)
+                            this.overviewLoaded = true
+
+                        })
+
                         this.loaded = true;
 
                     })
                     .catch(() => {
-
                         this.error = true;
                     });
 
@@ -138,30 +171,65 @@
             },
 
             changeFloor(floor) {
-                client.invoke('ChangeFloor', 'Heidelberglaan 15', floor).then(res => console.log(res, "ok")).catch(err => console.log(err, "error "))
+                client.invoke('ChangeFloor', this.$route.params.building, floor).catch(err => console.log(err))
 
             },
+
+            changeBuilding() {
+                client.invoke('changeBuilding', this.$route.params.building).catch(err => console.log(err))
+
+            },
+
             heatmapParse(points) {
                 let parsedPoints = []
-                const floorplanWidth = 290
-                const buildingWidth = parseInt(this.buildingWidth)
-                const heatmapScale = floorplanWidth/ buildingWidth
+                const heatmapScaleX = this.floorplanWidth / parseInt(this.buildingWidth)
+                const heatmapScaleZ = this.floorplanHeight / parseInt(this.buildingLength)
 
                 for (let point of points) {
-                    let parsedPointX =   parseInt(point[0]) * heatmapScale
-                    let parsedPointZ =  parseInt(point[1])  * heatmapScale
-                    parsedPoints.push(`${parsedPointX}, ${parsedPointZ}`)
+                    point = point.trim().split(',')
+                    let parsedPointX = parseInt(point[0]) * heatmapScaleX
+                    let parsedPointZ = parseInt(point[1]) * heatmapScaleZ
+                    parsedPoints.push({x: parsedPointX, y: parsedPointZ, value: 50})
                 }
-                console.log(parsedPoints)
-                console.log(this.$refs.heatmap)
 
-                return parsedPoints
+                this.floorData = parsedPoints
 
 
+            },
+            overviewParse(percentages) {
+                let parsedPercentages = []
+
+                for (let items of percentages) {
+                    items = items.trim().split(',')
+                    let floorNumber = items[0]
+                    let floorPercentage = items[1]
+                    let parsed = {
+                        floor: floorNumber,
+                        percentage: floorPercentage
+                    }
+                    parsedPercentages.push(parsed)
+                }
+                this.overviewData = parsedPercentages
+
+
+            },
+            start: async function () {
+                try {
+                    await client.start();
+                    console.log("connected");
+                } catch (err) {
+                    console.log(err);
+                    setTimeout(() => this.start(), 5000);
+                }
+
+                client.onclose(async () => {
+                    await this.start();
+                });
             }
 
         },
         mounted() {
+
 
         }
 

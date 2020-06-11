@@ -2,36 +2,12 @@
     <div id="progress-bar-root">
         <div class="progress-bar-parent-container">
             <div class="progress-container">
-                <div class="progress-element">
-                    <h2 class="progress-floor-name">Floor 0</h2>
-                    <progress class="progress is-primary" value="20" max="100"></progress>
-                    <div class="progress-percentage">20%</div>
+                <div class="progress-element" v-for="floors of this.floorPercentageInfo" v-bind:key="floors.index">
+                    <h2 class="progress-floor-name">Floor {{ floors.floor }}</h2>
+                    <progress class="progress is-primary" :value="floors.percentage" max="100"></progress>
+                    <div class="progress-percentage" > {{ floors.percentage }}%</div>
                 </div>
-                <div class="progress-element">
-                    <h2 class="progress-floor-name">Floor 1</h2>
-                    <progress class="progress is-primary" value="40" max="100"></progress>
-                    <div class="progress-percentage">40%</div>
-                </div>
-                <div class="progress-element">
-                    <h2 class="progress-floor-name">Floor 2</h2>
-                    <progress class="progress is-primary" value="20" max="100"></progress>
-                    <div class="progress-percentage">20%</div>
-                </div>
-                <div class="progress-element">
-                    <h2 class="progress-floor-name">Floor 3</h2>
-                    <progress class="progress is-primary" value="60" max="100"></progress>
-                    <div class="progress-percentage">60%</div>
-                </div>
-                <div class="progress-element">
-                    <h2 class="progress-floor-name">Floor 4</h2>
-                    <progress class="progress is-primary" value="80" max="100"></progress>
-                    <div class="progress-percentage">80%</div>
-                </div>
-                <div class="progress-element">
-                    <h2 class="progress-floor-name">Floor 5</h2>
-                    <progress class="progress is-primary" value="60" max="100"></progress>
-                    <div class="progress-percentage">60%</div>
-                </div>
+
 
 
             </div>
@@ -41,7 +17,8 @@
 
 <script>
     export default {
-        name: "progressBar"
+        name: "progressBar",
+        props: {floorPercentageInfo: Array}
     }
 </script>
 

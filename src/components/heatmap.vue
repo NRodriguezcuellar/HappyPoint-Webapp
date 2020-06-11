@@ -19,7 +19,7 @@
             <div class="sub-content-container">
                 <div class="arrow-btn" @click="left_arrow"><i class="fas fa-arrow-left fa-sm heatmap-small-prev"></i>
                 </div>
-                <div><h2 v-text="`Floor ${floor}`"></h2></div>
+                <div><h2> Floor {{floor}}</h2></div>
                 <div class="arrow-btn" @click="right_arrow"><i class="fas fa-arrow-right fa-sm heatmap-small-next"></i>
                 </div>
             </div>
@@ -67,7 +67,7 @@
     }
 
     .progress {
-        width: 270px;
+        width: 280px;
 
     }
 
@@ -105,14 +105,14 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 220px;
+        width: 240px;
         border: rgba(142, 155, 149, 0.50) 1px solid;
-        border-radius: 13px;
+        border-radius: 10px;
     }
 
     .white-container {
         background-color: white;
-        padding: 25px;
+        padding: 20px;
         border-radius: 10px;
         max-width: 280px;
         display: flex;
@@ -126,6 +126,7 @@
     .floor-plan {
         height: 500px;
         border-radius: 10px;
+        width: 260px;
     }
 
     .heatmap-small-prev, .heatmap-small-next {
