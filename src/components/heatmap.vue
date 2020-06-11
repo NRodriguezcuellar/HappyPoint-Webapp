@@ -4,7 +4,7 @@
             <button class="arrow-btn heatmap-prev" @click="left_arrow"><i class=" fas fa-arrow-left fa-lg"></i></button>
             <div class="white-container">
                 <heatmapjs-vue class="parent-container" :data="data" :min="min"
-                               :max="max" ref="heatmap">
+                               :max="max" ref="heatmap" :options="config">
                     <img :src="pictureSource" alt="floor plan for floor 0 "  class="floor-plan"/>
                 </heatmapjs-vue>
             </div>
@@ -36,7 +36,14 @@
     export default {
         name: "heatmap",
         data: function () {
-            return {}
+            return {
+                config: {
+                    radius: 40,
+                    opacity: 0.4,
+                    blur: 0.3,
+
+                }
+            }
 
         },
         props: {

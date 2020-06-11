@@ -147,6 +147,7 @@
                         });
 
                         client.on('ReceiveBuildingUpdate', res => {
+                            this.overviewLoaded = false
                             this.overviewParse(res)
                             this.overviewLoaded = true
 
@@ -189,7 +190,7 @@
                     point = point.trim().split(',')
                     let parsedPointX = parseInt(point[0]) * heatmapScaleX
                     let parsedPointZ = parseInt(point[1]) * heatmapScaleZ
-                    parsedPoints.push({x: parsedPointX, y: parsedPointZ, value: 50})
+                    parsedPoints.push({x: parsedPointX, y: parsedPointZ, value: 20})
                 }
 
                 this.floorData = parsedPoints
@@ -219,12 +220,7 @@
                     console.log("connected");
                 } catch (err) {
                     console.log(err);
-                    setTimeout(() => this.start(), 5000);
                 }
-
-                client.onclose(async () => {
-                    await this.start();
-                });
             }
 
         },

@@ -24,7 +24,7 @@
             <div class="navbar-end easy-font">
                 <router-link
                         class="navbar-item" to="/service">
-                    Service
+                    Search
                 </router-link>
                 <router-link
                         class="navbar-item" to="/about">
