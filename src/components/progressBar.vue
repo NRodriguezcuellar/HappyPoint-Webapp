@@ -5,9 +5,8 @@
                 <div class="progress-element" v-for="floors of this.floorPercentageInfo" v-bind:key="floors.index">
                     <h2 class="progress-floor-name">Floor {{ floors.floor }}</h2>
                     <progress class="progress is-primary" :value="floors.percentage" max="100"></progress>
-                    <div class="progress-percentage" > {{ floors.percentage }}%</div>
+                    <div class="progress-percentage"> {{ floors.percentage }}%</div>
                 </div>
-
 
 
             </div>
@@ -23,24 +22,34 @@
 </script>
 
 <style scoped>
+    progress {
+        -webkit-appearance: none;
+        appearance: none;
+    }
+
+    progress[value]::-webkit-progress-bar {
+        border-radius: 2px;
+        color: #7ED321 !important;
+    }
 
 
     .progress-percentage {
-        padding-bottom: 35px;
         padding-left: 10px;
-        color: white;
     }
 
     .progress-floor-name {
         min-width: 80px;
-        padding-bottom: 35px;
         padding-left: 10px;
         padding-right: 10px;
-        color: white;
     }
 
     .progress-element {
+        background-color: white;
+        border-radius: 10px;
         display: flex;
+        align-items: center;
+        margin-bottom: 30px;
+        padding: 10px;
     }
 
     .progress-bar-parent-container {
@@ -52,9 +61,6 @@
         border-radius: 10px;
     }
 
-    .progress-title {
-        padding: 1rem;
-    }
 
     .progress-container {
         display: flex;
@@ -65,30 +71,40 @@
     }
 
     .progress {
+        margin-bottom: 0;
         min-width: 250px;
     }
 
     @media all and (max-width: 768px) {
-        .progress-element {
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 10px;
-        }
+
 
         .progress-floor-name, .progress-bar-parent-container {
-            padding: 0 ;
-            min-width: 0 ;
+            padding: 0 5px 0 0;
+            min-width: 0;
             margin-bottom: 0 !important;
         }
 
-        .progress-percentage {
-            padding-bottom: 20px !important;
-            padding-left: 0;
+        .progress-element {
+            margin-bottom: 20px;
         }
+
+        .progress-percentage {
+            padding-bottom: 0;
+            padding-left: 5px;
+        }
+
         .progress {
             margin-bottom: 5px;
         }
 
 
+    }
+
+    @media all and (max-width: 420px) {
+
+        .progress {
+            min-width: 0;
+            width: 200px;
+        }
     }
 </style>

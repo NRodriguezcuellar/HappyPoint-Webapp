@@ -38,7 +38,7 @@
         data: function () {
             return {
                 config: {
-                    radius: 40,
+                    radius: 20,
                     opacity: 0.4,
                     blur: 0.3,
 

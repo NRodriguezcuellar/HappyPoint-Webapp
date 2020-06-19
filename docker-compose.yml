@@ -1,0 +1,56 @@
+version: "3"
+
+services:
+  front-end-vue:
+    container_name: front-end-website
+    image: borophu/bezettingsgraad:website-latest
+    environment:
+      VIRTUAL_HOST: "happypoint.works, www.happypoint.works"
+      LETSENCRYPT_HOST: "happypoint.works, www.happypoint.works"
+    expose:
+      - "80"
+
+  back-end-api:
+    container_name: back-end-api
+    image: borophu/bezettingsgraad:api-latest
+    environment:
+      VIRTUAL_HOST: "api.happypoint.works"
+      LETSENCRYPT_HOST: "api.happypoint.works"
+    expose:
+      - "80"
+
+  back-end-gateway:
+    container_name: back-end-gateway
+    image: borophu/bezettingsgraad:gateway-latest
+    environment:
+      VIRTUAL_HOST: "gateway.happypoint.works"
+      LETSENCRYPT_HOST: "gateway.happypoint.works"
+    expose:
+      - "80"
+
+  nginx-proxy:
+    container_name: nginx-proxy
+    image: jwilder/nginx-proxy:latest
+    environment:
+      DEFAULT_EMAIL: "nicolas.rodriguezcuellar@student.hu.nl"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - /etc/nginx/certs
+      - /etc/nginx/vhost.d
+      - /usr/share/nginx/html
+    ports:
+      - 80:80
+      - 443:443
+
+  nginx-letsencrypt:
+    container_name: nginx-proxy-letsencrypt
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    environment:
+      DEFAULT_EMAIL: "nicolas.rodriguezcuellar@student.hu.nl"
+      NGINX_PROXY_CONTAINER: "nginx-proxy"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - /etc/nginx/certs
+      - /etc/nginx/vhost.d
+      - /usr/share/nginx/html

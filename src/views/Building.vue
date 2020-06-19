@@ -1,11 +1,15 @@
 <template>
+
     <div class="root-container">
+
         <div class="has-bg-blue data-grandparent-container" v-if="loaded">
+
             <div class="title-container"><h1 class="title easy-font has-text-left">
                 {{buildingInfo.name}}</h1></div>
             <div class="data-parent-container">
                 <div class="heatmap-container" v-if="!overviewToggled">
-                    <heatmap :data="floorData" :min="min" :max="max" :progress="parseInt(this.currentFloorPercentage[0].percentage)" :left_arrow="previousFloor"
+                    <heatmap :data="floorData" :min="min" :max="max"
+                             :progress="parseInt(this.currentFloorPercentage[0].percentage)" :left_arrow="previousFloor"
                              :right_arrow="nextFloor" :floor="parseInt(this.currentFloorPercentage[0].floor)"
                              :picture-source="picture_source"
                              v-if="overviewLoaded"/>
@@ -14,6 +18,7 @@
                     <progress-bar :floor-percentage-info="this.overviewData" v-if="overviewLoaded"/>
                 </div>
             </div>
+
             <div class="busyness-navigation-grandparent">
                 <div class="busyness-navigation-parent">
                     <button class="busyness-navigation-button button-left easy-font" @click="toggleHeatmap">Heatmap
@@ -22,21 +27,26 @@
                     </button>
                 </div>
             </div>
+
         </div>
+
         <div class="lds-ellipsis" v-if="loading">
             <div></div>
             <div></div>
             <div></div>
             <div></div>
         </div>
+
         <div class="has-text-centered" v-if="error"> Something went wrong.. Try again later.</div>
+
     </div>
+
 </template>
 
 <script>
     import Heatmap from "../components/heatmap";
     import ProgressBar from "../components/progressBar";
-    import {HubConnectionBuilder, LogLevel} from '@aspnet/signalr';
+    import {HubConnectionBuilder, LogLevel, HubConnectionState} from '@aspnet/signalr';
 
     const client = new HubConnectionBuilder()
         .configureLogging(LogLevel.Warning)
@@ -76,6 +86,7 @@
             buildingLength: function () {
                 return this.buildingInfo.length
             },
+
             currentFloorPercentage: function () {
 
                 return this.overviewData.filter(items => {
@@ -85,16 +96,15 @@
             }
 
         },
+
         data() {
             return {
-                heatmap_data: [{x: 50, y: 50, value: 90}, {x: 200, y: 142, value: 90}],
                 min: 0,
                 max: 100,
                 error: null,
                 loaded: false,
                 buildingInfo: null,
                 floorData: null,
-                progress: 20,
                 heatmapLoaded: false,
                 overviewLoaded: false,
                 floorplanWidth: 240,
@@ -104,61 +114,84 @@
 
         },
 
-        created() {
-            this.fetchInfo()
-        },
         methods: {
+
+            // change to previous floor
             previousFloor: function () {
                 if (this.floor > this.buildingInfo.floorstart) {
 
                     this.$store.commit('previousFloor')
 
-                    this.changeFloor(this.floor)
+                    this.changeFloor()
 
 
                 }
 
             },
 
+            // change to next floor
             nextFloor: function () {
                 if (this.floor < this.buildingInfo.height) {
 
                     this.$store.commit('nextFloor')
 
-                    this.changeFloor(this.floor)
+                    this.changeFloor()
                 }
 
             },
 
+            // Function that requests all the building info and also makes the websockets connection to the signalR hub
             fetchInfo() {
 
                 this.axios.get(`${this.$store.state.baseUrl}/heatmap/${this.$route.params.building}`)
                     .then(response => {
+
                         this.buildingInfo = response.data;
 
-                        this.start()
-                            .then(() => this.changeFloor(this.floor))
-                            .then(() => this.changeBuilding())
+                        // check if connection is already made otherwise connect
+                        if (client.state === HubConnectionState.Connected) {
 
-                        client.on('ReceiveUpdate', res => {
-                            this.heatmapLoaded = false
-                            this.heatmapParse(res)
-                            this.heatmapLoaded = true
-                        });
+                            this.changeFloor()
+                            this.changeBuilding()
 
-                        client.on('ReceiveBuildingUpdate', res => {
-                            this.overviewLoaded = false
-                            this.overviewParse(res)
-                            this.overviewLoaded = true
+                        } else {
 
-                        })
+                            this.start()
+                                .then(() => this.changeFloor())
+                                .then(() => this.changeBuilding())
+
+                        }
 
                         this.loaded = true;
 
                     })
                     .catch(() => {
                         this.error = true;
+
                     });
+
+
+                // receives updates and initial info for the heatmap
+                client.on('ReceiveUpdate', res => {
+
+                    this.heatmapLoaded = false
+
+                    this.heatmapParse(res)
+                    this.heatmapLoaded = true
+
+                });
+
+
+                // receives updates and inital info for the overview
+                client.on('ReceiveBuildingUpdate', res => {
+
+                    this.overviewLoaded = false
+
+                    this.overviewParse(res)
+                    this.overviewLoaded = true
+
+
+                })
 
 
             },
@@ -171,8 +204,8 @@
                 this.$store.commit('toggleOverview', false)
             },
 
-            changeFloor(floor) {
-                client.invoke('ChangeFloor', this.$route.params.building, floor).catch(err => console.log(err))
+            changeFloor() {
+                client.invoke('ChangeFloor', this.$route.params.building, this.floor).catch(err => console.log(err))
 
             },
 
@@ -181,6 +214,8 @@
 
             },
 
+            // converts the device points into an array with the values adjusted for the width and height of the heatmap
+            // then saves the parsed points to floorData to use for the Heatmap
             heatmapParse(points) {
                 let parsedPoints = []
                 const heatmapScaleX = this.floorplanWidth / parseInt(this.buildingWidth)
@@ -197,6 +232,8 @@
 
 
             },
+
+            // creates an array of percentage objects for the Overview menu
             overviewParse(percentages) {
                 let parsedPercentages = []
 
@@ -214,6 +251,8 @@
 
 
             },
+
+            // Starts the signalR client
             start: async function () {
                 try {
                     await client.start();
@@ -224,10 +263,11 @@
             }
 
         },
-        mounted() {
 
-
+        created() {
+            this.fetchInfo()
         }
+
 
     }
 </script>
