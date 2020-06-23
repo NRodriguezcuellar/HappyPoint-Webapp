@@ -1,28 +1,41 @@
 <template>
     <div class="root-container-heatmap">
         <div class="parent-white-container">
+
             <button class="arrow-btn heatmap-prev" @click="left_arrow"><i class=" fas fa-arrow-left fa-lg"></i></button>
+
             <div class="white-container">
+
                 <heatmapjs-vue class="parent-container" :data="data" :min="min"
                                :max="max" ref="heatmap" :options="config">
-                    <img :src="pictureSource" alt="floor plan for floor 0 "  class="floor-plan"/>
+                    <img :src="pictureSource" alt="floor plan for floor 0 " class="floor-plan"/>
                 </heatmapjs-vue>
+
             </div>
+
             <button class="arrow-btn heatmap-next" @click="right_arrow"><i class=" fas fa-arrow-right fa-lg"></i>
             </button>
+
         </div>
 
         <div class="has-text-centered has-text-white floor-title easy-font">
+
             <div class="progress-container">
                 <progress class="progress is-success" v-bind:value="progress" max="100">60%</progress>
             </div>
+
             <div class="sub-content-container">
+
                 <div class="arrow-btn" @click="left_arrow"><i class="fas fa-arrow-left fa-sm heatmap-small-prev"></i>
                 </div>
+
                 <div><h2> Floor {{floor}}</h2></div>
+
                 <div class="arrow-btn" @click="right_arrow"><i class="fas fa-arrow-right fa-sm heatmap-small-next"></i>
                 </div>
+
             </div>
+
         </div>
 
     </div>
@@ -46,6 +59,7 @@
             }
 
         },
+
         props: {
             data: Array,
             min: Number,

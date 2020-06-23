@@ -22,6 +22,8 @@
 </script>
 
 <style scoped>
+
+
     progress {
         -webkit-appearance: none;
         appearance: none;
@@ -59,6 +61,7 @@
 
         padding: 1rem;
         border-radius: 10px;
+
     }
 
 
@@ -66,8 +69,7 @@
         display: flex;
         flex-direction: column;
         padding: 0.5rem;
-
-
+        overflow: auto;
     }
 
     .progress {

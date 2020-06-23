@@ -1,16 +1,25 @@
 <template>
     <div>
         <div class="buildings-container">
+
             <div class="buildings-title section has-text-white is-title"> Search your building</div>
+
             <div class="section select-container">
+
                 <div class="buildings-input">
+
                     <v-select :value="$store.state.chosen_building" @input="select_building"
                               :options="buildings" class="select-bar"></v-select>
+
                 </div>
+
                 <div class="section button-container">
+
                     <button class="button is-hp-green-button" @click="confirm_building">Choose</button>
                     <small class="has-text-white p-md  hidden" id="warning">Please choose a building</small>
+
                 </div>
+
             </div>
 
         </div>

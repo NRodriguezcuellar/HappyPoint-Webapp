@@ -16,8 +16,9 @@ services:
     environment:
       VIRTUAL_HOST: "api.happypoint.works"
       LETSENCRYPT_HOST: "api.happypoint.works"
+      VIRTUAL_PORT: "8080"
     expose:
-      - "80"
+      - "8080"
 
   back-end-gateway:
     container_name: back-end-gateway

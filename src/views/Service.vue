@@ -1,8 +1,12 @@
 <template>
     <div class="root-container">
+
         <div class="parent-container has-bg-blue">
+
             <building-chooser :buildings="buildings" class="buildings-chooser"></building-chooser>
+
         </div>
+
     </div>
 
 </template>

@@ -7,25 +7,41 @@
             <div class="title-container"><h1 class="title easy-font has-text-left">
                 {{buildingInfo.name}}</h1></div>
             <div class="data-parent-container">
+
                 <div class="heatmap-container" v-if="!overviewToggled">
-                    <heatmap :data="floorData" :min="min" :max="max"
-                             :progress="parseInt(this.currentFloorPercentage[0].percentage)" :left_arrow="previousFloor"
-                             :right_arrow="nextFloor" :floor="parseInt(this.currentFloorPercentage[0].floor)"
-                             :picture-source="picture_source"
-                             v-if="overviewLoaded"/>
+
+                    <heatmap
+                            :data="floorData" :min="min" :max="max"
+                            :progress="parseInt(this.currentFloorPercentage[0].percentage)"
+                            :left_arrow="previousFloor"
+                            :right_arrow="nextFloor"
+                            :floor="parseInt(this.currentFloorPercentage[0].floor)"
+                            :picture-source="picture_source"
+                            v-if="overviewLoaded && this.currentFloorPercentage">
+
+                    </heatmap>
+
+
                 </div>
+
+
                 <div class="overview-parent-container" v-if="overviewToggled">
-                    <progress-bar :floor-percentage-info="this.overviewData" v-if="overviewLoaded"/>
+
+                    <progress-bar :floor-percentage-info="this.overviewData" v-if="overviewLoaded"></progress-bar>
+
                 </div>
+
             </div>
 
             <div class="busyness-navigation-grandparent">
+
                 <div class="busyness-navigation-parent">
                     <button class="busyness-navigation-button button-left easy-font" @click="toggleHeatmap">Heatmap
                     </button>
                     <button class="busyness-navigation-button button-right easy-font" @click="toggleOverview">Overview
                     </button>
                 </div>
+
             </div>
 
         </div>
@@ -37,7 +53,7 @@
             <div></div>
         </div>
 
-        <div class="has-text-centered" v-if="error"> Something went wrong.. Try again later.</div>
+        <div class="has-text-centered" v-if="error"> Something went wrong with fetching the data.. Try again later.</div>
 
     </div>
 
@@ -91,7 +107,6 @@
 
                 return this.overviewData.filter(items => {
                     return parseInt(items.floor) === parseInt(this.floor)
-
                 })
             }
 
@@ -195,10 +210,12 @@
 
 
             },
-
+            // show the overview
             toggleOverview() {
                 this.$store.commit('toggleOverview', true)
             },
+
+            //show the heatmap
 
             toggleHeatmap() {
                 this.$store.commit('toggleOverview', false)
@@ -259,7 +276,12 @@
                     console.log("connected");
                 } catch (err) {
                     console.log(err);
+                    setTimeout(() => this.start(), 5000);
                 }
+
+                client.onclose(async () => {
+                    await this.start();
+                });
             }
 
         },
