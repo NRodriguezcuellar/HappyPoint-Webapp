@@ -187,7 +187,7 @@
                             // this will post dummy data so that you can see the heatmap in function without needing to post data manually
                             console.log('posted')
 
-                            const data = JSON.stringify(["1,2,14", "12,0,65", "15,0,42", "43,2,78", "43,2,28", "20,2,8", "21,1,58", "20,1,88", "20,2,65"]);
+                            const data = JSON.stringify(["1,2,14", "12,0,65", "15,0,42", "43,2,78", "43,2,28", "20,2,8", "21,7,58", "20,5,88", "20,2,65"]);
 
                             const config = {
                                 method: 'post',
