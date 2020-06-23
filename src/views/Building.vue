@@ -53,7 +53,9 @@
             <div></div>
         </div>
 
-        <div class="has-text-centered" v-if="error"> Something went wrong with fetching the data.. Try again later.</div>
+        <div class="has-text-centered" v-if="error"> Something went wrong with fetching the data. Try again later
+            please.
+        </div>
 
     </div>
 
@@ -180,6 +182,33 @@
                         this.loaded = true;
 
                     })
+                    .then(() => {
+
+                            // this will post dummy data so that you can see the heatmap in function without needing to post data manually
+                            console.log('posted')
+
+                            const data = JSON.stringify(["1,2,14", "12,0,65", "15,0,42", "43,2,78", "43,2,28", "20,2,8", "21,1,58", "20,1,88", "20,2,65"]);
+
+                            const config = {
+                                method: 'post',
+                                url: `${this.$store.state.baseUrl}/devices/${this.$route.params.building}`,
+                                headers: {
+                                    'GatewayKey': 'Bearer ded6c97a44536076a017c852936a3a6c0086034325b939887b2ca1a97cc90da9',
+                                    'Content-Type': 'application/json'
+                                },
+                                data: data
+                            };
+
+                            this.axios(config)
+                                .then(function (response) {
+                                    console.log(JSON.stringify(response.data));
+                                })
+                                .catch(function (error) {
+                                    console.log(error);
+                                });
+
+                        }
+                    )
                     .catch(() => {
                         this.error = true;
 
